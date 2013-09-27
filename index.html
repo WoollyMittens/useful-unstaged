@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>useful.unstaged.js: Only load visible backgrounds</title>
+		<style>
+			html { font-family:Sans-Serif; font-size:75%; height:100%; }
+			body { _height:100%; line-height:180%; margin:0; min-height:100%; padding:1%; }
+			.example { max-width:960px; margin:0 auto; padding:0; clear:both; }
+			.example > article, .example > aside { width:98%; padding:2%; }
+			.example-left > article, .example-left > aside { width:48%; padding:1%; float:left; }
+			.example-right > article, .example-right > aside { width:48%; padding:1%; float:right; }
+		</style>
+		<!--[if lte IE 9]>
+			<meta http-equiv="imagetoolbar" content="no"/>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<section class="example example-left">
+			<article>
+				<h2>Only load visible backgrounds</h2>
+				<p>Defers the loading of backgrounds until they come into view. This lowers the time it takes for the initial page to load.</p>
+				<p><a class="button downloadButton" href="http://github.com/WoollyMittens/useful-unstaged" target="_blank">Download (GitHub)</a></p>
+			</article>
+			<aside>
+
+				<!-- Cut below this -->
+				<style>@import url("./css/unstaged.css")</style>
+				<menu id="unstagedExample">
+					<li class="bg-0 off-stage">Item 0</li>
+					<li class="bg-1 off-stage">Item 1</li>
+					<li class="bg-2 off-stage">Item 2</li>
+					<li class="bg-3 off-stage">Item 3</li>
+					<li class="bg-4 off-stage">Item 4</li>
+					<li class="bg-5 off-stage">Item 5</li>
+					<li class="bg-6 off-stage">Item 6</li>
+					<li class="bg-7 off-stage">Item 7</li>
+					<li class="bg-8 off-stage">Item 8</li>
+					<li class="bg-9 off-stage">Item 9</li>
+				</menu>
+				<script src="./js/unstaged.min.js"></script>
+				<script>
+				//<!--
+					// create a new instance of the script
+					var unstaged = new useful.Unstaged(
+						document.getElementById('unstagedExample'),
+						document.querySelectorAll('.off-stage'),
+						{'offset' : 32}
+					);
+					// start the instance
+					unstaged.start();
+				//-->
+				</script>
+				<!-- Cut above this -->
+
+			</aside>
+		</section>
+	</body>
+</html>
