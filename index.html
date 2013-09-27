@@ -48,7 +48,10 @@
 					var unstaged = new useful.Unstaged(
 						document.getElementById('unstagedExample'),
 						document.querySelectorAll('.off-stage'),
-						{'offset' : 32}
+						{
+							'offset' : 32,
+							'allways' : true
+						}
 					);
 					// start the instance
 					unstaged.start();

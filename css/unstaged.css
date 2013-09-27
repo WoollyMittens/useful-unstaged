@@ -19,24 +19,37 @@
     -webkit-overflow-scrolling: touch;
   }
   #unstagedExample li {
+    -webkit-transition-property: opacity;
+    -moz-transition-property: opacity;
+    -o-transition-property: opacity;
+    transition-property: opacity;
+    -webkit-transition-duration: 500ms;
+    -moz-transition-duration: 500ms;
+    -o-transition-duration: 500ms;
+    transition-duration: 500ms;
+    -webkit-transition-delay: 100ms;
+    -moz-transition-delay: 100ms;
+    -o-transition-delay: 100ms;
+    transition-delay: 100ms;
     font-size: 32px;
     font-size: 2rem;
-    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
-    opacity: 0.7;
+    -webkit-box-shadow: inset 0 0 24px black;
+    -moz-box-shadow: inset 0 0 24px black;
+    box-shadow: inset 0 0 24px black;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+    opacity: 1;
     background-size: 100% auto;
     background-position: 50% 50%;
+    border-bottom: solid 1px #000;
     color: #fff;
+    font-weight: bold;
     list-style-type: none;
     margin: 0;
     padding: 0;
     height: 96px;
     line-height: 96px;
     text-align: center;
-    text-shadow: 0 0 2px #000;
-  }
-  #unstagedExample li:hover {
-    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
-    opacity: 1;
+    text-shadow: 0 0 3px #000;
   }
   #unstagedExample .bg-0 {
     background-image: url(../img/figure_0a.jpg);
@@ -70,6 +83,8 @@
   }
   #unstagedExample .off-stage {
     background-image: none !important;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+    opacity: 0.3;
   }
 }
 @media all {

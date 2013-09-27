@@ -48,6 +48,8 @@ This is the safest way of starting the script, but allows for only one target el
 
 **offset : {integer}** - Makes the background pre-load slightly outside the viewport.
 
+**always : {boolean}** - Makes the background unload again after it goes outside the viewport.
+
 ## Prerequisites
 
 To concatenate and minify the script yourself, the following prerequisites are required:

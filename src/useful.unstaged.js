@@ -30,13 +30,15 @@
 		this.start = function () {
 			// set the default offset if there wasn't one
 			this.cfg.offset = this.cfg.offset || 0;
+			// set the default repeat behaviour
+			this.cfg.always = this.cfg.always || false;
 			// set the scrolling event handler
 			this.stage.addEventListener('scroll', this.onUpdate(), true);
 			// perform the first redraw
 			this.update();
 		};
 		this.update = function () {
-			var objectPos, objectSize, className, replace = new RegExp(' off-stage|off-stage', 'i');
+			var objectPos, objectSize, className, replace = new RegExp(' off-stage| on-stage|off-stage|on-stage', 'i');
 			// get the scroll position
 			var scrollSize = useful.positions.window(this.stage);
 			var scrollPos = useful.positions.document(this.stage);
@@ -44,15 +46,17 @@
 			for (var a = 0, b = this.actors.length; a < b; a += 1) {
 				className = this.actors[a].className;
 				// if this actor is still invisible
-				if (replace.test(className)) {
+				if (replace.test(className) || cfg.always) {
 					// get the object position / dimensions
 					objectPos = { x : this.actors[a].offsetLeft, y : this.actors[a].offsetTop };
 					objectSize = { x : this.actors[a].offsetWidth, y : this.actors[a].offsetHeight };
-console.log(className, objectPos.y, scrollPos.y, scrollSize.y);
 					// if the object is in the viewport
-					if (objectPos.y >= scrollPos.y - this.cfg.offset && objectPos.y < scrollPos.y + this.cfg.offset + scrollSize.y) {
+					if (objectPos.y + objectSize.y >= scrollPos.y - this.cfg.offset && objectPos.y < scrollPos.y + this.cfg.offset + scrollSize.y) {
 						// mark its visibility
 						this.actors[a].className = className.replace(replace, '') + ' on-stage';
+					} else {
+						// mark the object is outsidie the viewport
+						this.actors[a].className = className.replace(replace, '') + ' off-stage';
 					}
 				}
 			}
