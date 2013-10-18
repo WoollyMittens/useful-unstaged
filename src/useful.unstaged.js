@@ -38,7 +38,7 @@
 			this.update();
 		};
 		this.update = function () {
-			var objectPos, objectSize, className, replace = new RegExp(' off-stage| on-stage|off-stage|on-stage', 'i');
+			var objectPos, objectSize, relativePos, className, replace = new RegExp(' off-stage| on-stage|off-stage|on-stage', 'i');
 			// get the scroll position
 			var scrollSize = useful.positions.window(this.stage);
 			var scrollPos = useful.positions.document(this.stage);
@@ -52,6 +52,13 @@
 					objectSize = { x : this.actors[a].offsetWidth, y : this.actors[a].offsetHeight };
 					// if the object is in the viewport
 					if (objectPos.y + objectSize.y >= scrollPos.y - this.cfg.offset && objectPos.y < scrollPos.y + this.cfg.offset + scrollSize.y) {
+						// if required position the parallax
+						if (this.cfg.parallax) {
+							relativePos = (objectPos.y - scrollPos.y + objectSize.y) / (scrollSize.y + objectSize.y) * 100;
+							relativePos = (relativePos > 100) ? 100 : relativePos;
+							relativePos = (relativePos < 0) ? 0 : relativePos;
+							this.actors[a].style.backgroundPosition = '50% ' + relativePos + '%';
+						}
 						// mark its visibility
 						this.actors[a].className = className.replace(replace, '') + ' on-stage';
 					} else {
