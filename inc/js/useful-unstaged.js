@@ -76,7 +76,8 @@
 
 	// allow console.log
 	polyfills.consoleLog = function () {
-		if (!window.console) {
+		var overrideTest = new RegExp('console-log', 'i');
+		if (!window.console || overrideTest.test(document.querySelectorAll('html')[0].className)) {
 			window.console = {};
 			window.console.log = function () {
 				// if the reporting panel doesn't exist
@@ -107,6 +108,8 @@
 				for (a = 0, b = arguments.length; a < b; a += 1) {
 					messages += arguments[a] + '<br/>';
 				}
+				// add a break after the message
+				messages += '<hr/>';
 				// output the queue to the panel
 				reportPanel.innerHTML = messages + reportString;
 			};
@@ -294,6 +297,8 @@
 			this.stage.addEventListener('scroll', this.onUpdate(), true);
 			// perform the first redraw
 			this.update();
+			// disable the start function so it can't be started twice
+			this.start = function () {};
 		};
 		this.update = function () {
 			var objectPos, objectSize, relativePos, className, replace = new RegExp(' off-stage| on-stage|off-stage|on-stage', 'i');
@@ -331,6 +336,8 @@
 			var context = this;
 			return function () { context.update(); };
 		};
+		// go
+		this.start();
 	};
 
 }(window.useful = window.useful || {}));

@@ -36,6 +36,8 @@
 			this.stage.addEventListener('scroll', this.onUpdate(), true);
 			// perform the first redraw
 			this.update();
+			// disable the start function so it can't be started twice
+			this.start = function () {};
 		};
 		this.update = function () {
 			var objectPos, objectSize, relativePos, className, replace = new RegExp(' off-stage| on-stage|off-stage|on-stage', 'i');
@@ -73,6 +75,8 @@
 			var context = this;
 			return function () { context.update(); };
 		};
+		// go
+		this.start();
 	};
 
 }(window.useful = window.useful || {}));
