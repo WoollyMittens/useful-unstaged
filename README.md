@@ -43,7 +43,7 @@ This is the safest way of starting the script, but allows for only one target el
 
 **stage : {DOM Element}** - This is the page element with the scrollbar. By default this is "window".
 
-**actors : {Array of DOM Elements}** - These are the elements that start off stage.
+**actors : {Array of DOM Elements}** - Optional list of elements that will be watched. Leave 'null' to use use every element with the '.off-stage' class name.
 
 **offset : {integer}** - Makes the background pre-load slightly outside the viewport.
 

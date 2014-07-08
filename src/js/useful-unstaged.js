@@ -44,28 +44,33 @@
 			// get the scroll position
 			var scrollSize = useful.positions.window(this.stage);
 			var scrollPos = useful.positions.document(this.stage);
-			// for every watched element
-			for (var a = 0, b = this.actors.length; a < b; a += 1) {
-				className = this.actors[a].className;
-				// if this actor is still invisible
-				if (replace.test(className) || cfg.always) {
-					// get the object position / dimensions
-					objectPos = { x : this.actors[a].offsetLeft, y : this.actors[a].offsetTop };
-					objectSize = { x : this.actors[a].offsetWidth, y : this.actors[a].offsetHeight };
-					// if the object is in the viewport
-					if (objectPos.y + objectSize.y >= scrollPos.y - this.cfg.offset && objectPos.y < scrollPos.y + this.cfg.offset + scrollSize.y) {
-						// if required position the parallax
-						if (this.cfg.parallax) {
-							relativePos = (objectPos.y - scrollPos.y + objectSize.y) / (scrollSize.y + objectSize.y) * 100;
-							relativePos = (relativePos > 100) ? 100 : relativePos;
-							relativePos = (relativePos < 0) ? 0 : relativePos;
-							this.actors[a].style.backgroundPosition = '50% ' + relativePos + '%';
+			// if we can measure the stage
+			if (scrollSize.y !== 0) {
+				// get the screen actors if they are unknown
+				var actors = this.actors || document.querySelectorAll('.off-stage');
+				// for every watched element
+				for (var a = 0, b = actors.length; a < b; a += 1) {
+					className = actors[a].className;
+					// if this actor is still invisible
+					if (replace.test(className) || cfg.always) {
+						// get the object position / dimensions
+						objectPos = { x : actors[a].offsetLeft, y : actors[a].offsetTop };
+						objectSize = { x : actors[a].offsetWidth, y : actors[a].offsetHeight };
+						// if the object is in the viewport
+						if (objectPos.y + objectSize.y >= scrollPos.y - this.cfg.offset && objectPos.y < scrollPos.y + this.cfg.offset + scrollSize.y) {
+							// if required position the parallax
+							if (this.cfg.parallax) {
+								relativePos = (objectPos.y - scrollPos.y + objectSize.y) / (scrollSize.y + objectSize.y) * 100;
+								relativePos = (relativePos > 100) ? 100 : relativePos;
+								relativePos = (relativePos < 0) ? 0 : relativePos;
+								actors[a].style.backgroundPosition = '50% ' + relativePos + '%';
+							}
+							// mark its visibility
+							actors[a].className = className.replace(replace, '') + ' on-stage';
+						} else {
+							// mark the object is outsidie the viewport
+							actors[a].className = className.replace(replace, '') + ' off-stage';
 						}
-						// mark its visibility
-						this.actors[a].className = className.replace(replace, '') + ' on-stage';
-					} else {
-						// mark the object is outsidie the viewport
-						this.actors[a].className = className.replace(replace, '') + ' off-stage';
 					}
 				}
 			}
